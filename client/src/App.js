@@ -1,9 +1,17 @@
-function App() {
-  return (
-    <div className="App">
-      <h1>Hello World</h1>
-    </div>
-  );
+import React, { Component } from 'react'
+
+export class App extends Component {
+  state = {
+    id: '',
+    name: '',
+    age: '',
+    favoriteMovies: []
+  }
+  render() {
+    return (
+      <div>App</div>
+    )
+  }
 }
 
-export default App;
+export default App
