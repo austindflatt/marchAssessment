@@ -29,6 +29,18 @@ const getUser = async (req, res) => {
     }
 };
 
+const getUserList = async (req, res) => {
+    try {
+        let user = await User.find();
+        if(!user){
+            throw { message: 'No users were found' }
+        }
+        res.status(200).json(user)
+    } catch (error) {
+        res.status(500).json(error)
+    }
+}
+
 const updateUser = async (req, res) => {
     try {
         const { id } = req.params;
@@ -53,6 +65,7 @@ const deleteUser = async (req, res) => {
 module.exports = {
     createUser,
 	getUser,
+    getUserList,
 	updateUser,
 	deleteUser
 }
