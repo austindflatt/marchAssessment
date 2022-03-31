@@ -1,23 +1,22 @@
 import React from 'react'
+import { Table, TextInput, Button } from '@mantine/core';
 
 const UsersList = (props) => {
   const { nameProp, idProp, ageProp, favoriteMoviesProp } = props;
   return (
 	<>
 	<div>
+  <Table>
+    <h2>{nameProp}</h2><p>User ID: {idProp}</p>
+    <tr key={null}>
+      <td><TextInput label='Name' onChange={props.onUpdateProp} data-id={idProp} value={props.nameProp} name='name' /></td>
+      <td><TextInput label='Age' type='number' value={props.ageProp} name='age' /></td>
+      <td><TextInput label='Favorite Movies' value={props.favoriteMoviesProp} name='favoriteMovies' style={{ marginRight: '20px' }}/></td>
+    </tr>
     <br />
-    <label>Name:</label>
-		<input onChange={props.onUpdateProp} data-id={idProp} value={props.nameProp} name='name'></input>
-		<p>ID: {props.idProp}</p>
-    <label>Age:</label>
-		<input type='number' onChange={props.onUpdateProp} data-id={idProp} value={props.ageProp} name='age'></input>
-    <br />
-    <label>Favorite Movies:</label>
-		{/* <textarea data-id={idProp} value={props.favoriteMoviesProp} name='favoriteMovies'></textarea> */}
-    <br /><br />
-		<button type='submit' onClick={() => props.updateUserProp(nameProp, idProp, ageProp, favoriteMoviesProp)} style={{ marginRight: '20px' }} >Update User</button>
-		<button type='submit'>Delete User</button>
-    <br />
+    <Button color="dark" type='submit' onClick={() => props.updateUserProp(nameProp, idProp, ageProp, favoriteMoviesProp)} style={{ marginRight: '10px' }}>Update User</Button>
+    <Button color="red" type='submit' onClick={() => props.deleteUserProp(idProp) }>Delete User</Button>
+  </Table>
 	</div>
 	</>
   )

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import AddUser from './components/AddUser'
 import UsersList from './components/UsersList'
-import { Container } from '@mantine/core';
+import { Container, Title } from '@mantine/core';
 
 export class App extends Component {
   state = {
@@ -29,6 +29,10 @@ export class App extends Component {
 
   handleUpdateUser = (name, _id, age, favoriteMovies) => {
     this.updateUser({name, _id, age, favoriteMovies})
+  }
+
+  handleDeleteUser = (_id) => {
+    this.handleDelete({_id})
   }
 
   handleUpdateChange = (event) => {
@@ -89,6 +93,18 @@ export class App extends Component {
     })
   }
 
+  handleDelete = async ({_id}) => {
+    const requestOptions = {
+      method: 'DELETE',
+      mode: 'cors',
+      headers: { 'Content-Type': 'application/json', "x-Trigger": "CORS", },
+    }
+    const response = await fetch(`http://localhost:3001/users/delete-user/${_id}`, requestOptions);
+    console.log(_id)
+    const createResponse = await response.json();
+    return createResponse;
+  }
+
   render() {
     return (
       <>
@@ -100,7 +116,7 @@ export class App extends Component {
       createMoviesProp={this.state.favoriteMovies}
       createUserProp={this.handleSubmit}
       />
-      <h1>All Users</h1>
+      <Title order={1}>Users List</Title>
       {this.state.users
       .map(({ _id, name, age, favoriteMovies }, idx) => {
         return (
@@ -112,6 +128,7 @@ export class App extends Component {
           favoriteMoviesProp={favoriteMovies}
           updateUserProp={this.handleUpdateUser}
           onUpdateProp={this.handleUpdateChange}
+          deleteUserProp={this.handleDeleteUser}
           />
         )
       })
