@@ -13,6 +13,10 @@ export class App extends Component {
     errorMessage: ''
   }
 
+  componentDidMount = () => {
+    this.getUsers();
+  }
+
   handleChange = (event) => {
     event.preventDefault();
     this.setState({
@@ -25,6 +29,7 @@ export class App extends Component {
     event.preventDefault();
     console.log('Submitted')
     this.createUser(this.state)
+    this.getUsers();
   }
 
   handleUpdateUser = (name, _id, age, favoriteMovies) => {
@@ -33,10 +38,10 @@ export class App extends Component {
 
   handleDeleteUser = (_id) => {
     this.handleDelete({_id})
+    this.getUsers();
   }
 
   handleUpdateChange = (event) => {
-    console.log('onChange')
     console.log(event.target.dataset.id)
     const copiedUsers = [ ...this.state.users ];
     const updatedUsers = copiedUsers.map((user) => {
@@ -79,10 +84,6 @@ export class App extends Component {
     const response = await fetch(`http://localhost:3001/users/create-user`, requestOptions);
     const createResponse = await response.text();
     return createResponse;
-  }
-
-  componentDidMount = () => {
-    this.getUsers();
   }
 
   getUsers = async () => {
